@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&display=swap');
+
+.page{
+    background-color: #121212;
+    color: #ffffff;
+    width: 100vw;
+    min-height: 100vh;
+    font-family: "Open Sans", sans-serif;;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 5%;
+    min-width: 5vh;
+}
+.heading , .navbar{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.heading h4{
+    font-weight: 700;
+    font-size: 1.11rem;
+    font-family: "Outfit", sans-serif;
+}
+.heading img{
+    max-width: 35px;
+    max-height: 35px;
+}
+
+.navbar button{
+    min-width: 87px;
+    height: 40px;
+    border-radius: 6px;
+    padding: 10.05px 17px 10.75px 17px;
+}
+
+.loginButton{
+    background: none;
+    border: 1px solid #7EA6FF;
+    font-size: 1rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: #7EA6FF;
+}
+
+.signupButton{
+    background-color: #1a5fff;
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, .2);
+    border: none;
+    margin-left: 10px;
+    font-size: 1rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* header End */
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.chatbotIntro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.chatbotIntro h2{
+    background: linear-gradient(to right , #4b83ff , #b794f4);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    font-size: 4.5rem;
+    font-weight: 700;
+    font-family: "Outfit", sans-serif;
+}
+
+.chatbotIntro p{
+    font-weight: 400;
+    font-size: 1.25rem;
+}
+
+.chatbotIntro button{
+    height: 60px;
+    min-width: 250px;
+    width: 20vw;
+    font-weight: 600;
+    font-size: 1.11rem;
+}
+
+.introImage{
+    width: 100vw;
+    text-align: center;
+}
+.introImage img{
+    width: 80%;
+    /* background: ; */
+}
