@@ -64,6 +64,11 @@ function Dashboard() {
         }
     }
 
+    const createTemplate = () =>{
+        localStorage.setItem('selectedFolderId' , selectedFolder)
+        navigate('/formtemplates')
+    }
+
     useEffect(()=>{
         fetchUser()
         fetchfolder()
@@ -110,7 +115,7 @@ function Dashboard() {
                     })}
                 </div>
                 <div className={styles.typebotStr} >
-                    <div className={styles.createTypebot} >
+                    <div className={styles.createTypebot} onClick={createTemplate} >
                         <GrAdd className={styles.plusIcon} />
                         <p>Create a typebot</p>
                     </div>

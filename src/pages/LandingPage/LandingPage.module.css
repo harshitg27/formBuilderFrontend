@@ -8,7 +8,7 @@
     font-weight: 400;
 }
 
-header {
+.page header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,7 +70,7 @@ header {
     margin-top: 40px;
 }
 
-section {
+.page section {
     text-align: center;
     width: 80vw;
     margin-top: 5rem;
