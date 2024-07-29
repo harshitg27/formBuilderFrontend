@@ -3,20 +3,79 @@ import styles from './FormTemplatesPage.module.css'
 import Workspace from './Workspace'
 import ThemesPage from './ThemesPage'
 import Analytics from './Analytics'
+import { createForm, getFormById, updateForm } from '../../api/Form'
+import { useNavigate } from 'react-router-dom'
+import { GrFormCheckmark } from 'react-icons/gr'
 
 function FormTemplatesPage() {
+  const navigate = useNavigate()
+  const [selectedNav, setSelectedNav] = useState('Flow')
   const [formName, setFormName] = useState('')
   const [formTheme, setFormTheme] = useState('Dark')
-  const [formType, setFormType] = useState('')
-  const [selectedNav, setSelectedNav] = useState('Flow')
-  const [formTemplates , setFormTemplates] = useState([])
+  const [formTemplates, setFormTemplates] = useState([])
+  // const [isUpdate, setIsUpdate] = useState(false)
+  const [formId, setFormId] = useState('')
+  const [inputNumbers, setInputNumbers] = useState([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+  const [formLink, setFormLink] = useState('')
+  const [copyLink , setCopyLink] = useState(false)
+  const path = window.location.pathname.split('/')
+
+  const fetchForm = async (id) => {
+    const response = await getFormById(id)
+    // console.log(response)
+    if (response.status == 200) {
+      console.log(response.data.form)
+      setFormName(response.data.form.formName)
+      setFormTheme(response.data.form.formTheme)
+      setFormTemplates(response.data.form.formTemplate)
+      setInputNumbers(response.data.form.inputNumbers)
+    } else {
+      // console.log('LogOut')
+      localStorage.clear
+      navigate('/')
+    }
+  }
   useEffect(() => {
-    // console.log(localStorage.getItem('selectedFolde'))
-    localStorage.getItem('selectedFormId') ? setFormType('update') : setFormType('create')
+    // console.log(path)
+    if (path[path.length - 2] == 'update') {
+      // console.log(path[path.length - 2])
+      setFormId(path[path.length - 1])
+      setFormLink('/form/' + path[path.length - 1])
+      fetchForm(path[path.length - 1])
+    }
   }, [])
   useEffect(()=>{
-    console.log(formTemplates)
-  },[formTemplates])
+    if(copyLink){
+      setTimeout(()=>{
+        setCopyLink(false)
+      } , 5000)
+    }
+  },[copyLink])
+
+  const createF = async () => {
+    const folderId = localStorage.getItem('selectedFolderId')
+    const response = await createForm(formName, formTheme, folderId, formTemplates, inputNumbers);
+    // console.log(response.data)
+    if (response.status == 201) {
+      setFormId(response.data.form._id)
+      setFormLink(`/form/${response.data.form._id}`)
+      await window.navigator.clipboard.writeText(`/form/${response.data.form._id}`)
+      setCopyLink(true)
+      navigate(`/formtemplates/update/${response.data.form._id}`)
+      fetchForm(response.data.form._id)
+    }
+  }
+
+  const updateF = async () => {
+    const folderId = localStorage.getItem('selectedFolderId')
+    const response = await updateForm(formId , formName, formTheme, folderId, formTemplates, inputNumbers)
+    if(response.status == 201){
+      console.log(response.data.updatedForm)
+      setFormLink(`/form/${response.data.updatedForm._id}`)
+      await window.navigator.clipboard.writeText(`/form/${response.data.updatedForm._id}`)
+      setCopyLink(true)
+    }
+  }
 
   const selectedStyles = {
     color: '#7EA6FF',
@@ -34,15 +93,21 @@ function FormTemplatesPage() {
           <h5 style={selectedNav === 'Response' ? selectedStyles : {}} onClick={() => setSelectedNav('Response')}>Response</h5>
         </div>
         <div className={styles.actions}>
-          <button> Share</button>
-          <button style={{ background: 'rgba(74 , 222 , 128 , .8)' }}> Save</button>
-          <p>X</p>
+          <button style={formId ? { background: '#1A5FFF' } : {}} > Share</button>
+          <button style={{ background: 'rgba(74 , 222 , 128 , .8)' }} onClick={() => { formId ? updateF() : createF() }}> Save</button>
+          <p onClick={() => { navigate('/dashboard') }}>X</p>
         </div>
       </header>
 
-      {selectedNav === 'Flow' && <Workspace templates={formTemplates} setTemplates={setFormTemplates}/>}
-      {selectedNav === 'Theme' && <ThemesPage/>}
-      {selectedNav === 'Response' && <Analytics/>}
+      {copyLink && <div className={styles.copylink}>
+        <GrFormCheckmark style={{ width: '1.5rem', height: '1.5rem', color: '#1A5FFF' }} />
+        <p>Link Copied</p>
+      </div>
+      }
+
+      {selectedNav === 'Flow' && <Workspace templates={formTemplates} setTemplates={setFormTemplates} inputNumbers={inputNumbers} setInputNumbers={setInputNumbers} />}
+      {selectedNav === 'Theme' && <ThemesPage formTheme={formTheme} setFormTheme={setFormTheme} />}
+      {selectedNav === 'Response' && <Analytics />}
     </div>
   )
 }

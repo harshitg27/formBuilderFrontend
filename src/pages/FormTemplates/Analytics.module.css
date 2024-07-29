@@ -1,0 +1,13 @@
+.page{
+    height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.defaultText{
+    font-size: 2.25rem;
+    font-weight: 400;
+    color: rgba(105, 105, 105, .45);
+}

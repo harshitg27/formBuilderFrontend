@@ -11,18 +11,18 @@ import i6 from '../images/InputsIcons/rating.png'
 import i7 from '../images/InputsIcons/button.png'
 
 export const bubbles = [
-    {icons:b1 , name:'Text' , num:1},
-    {icons:b2 , name:'Image' , num:1},
-    {icons:b3 , name:'Video' , num:1},
-    {icons:b4 , name:'GIF' , num: 1},
+    {icons:b1 , name:'Text'},
+    {icons:b2 , name:'Image'},
+    {icons:b3 , name:'Video'},
+    {icons:b4 , name:'GIF' }
 ]
 
 export const inputs = [
-    {icons:i1 , name:'Text' , num:1},
-    {icons:i2 , name:'Number' , num:1},
-    {icons:i3 , name:'Email' , num:1},
-    {icons:i4 , name:'Phone' , num:1},
-    {icons:i5 , name:'Date' , num:1},
-    {icons:i6 , name:'Rating' , num:1},
-    {icons:i7 , name:'Button' , num: 1},
+    {icons:i1 , name:'Text'},
+    {icons:i2 , name:'Number'},
+    {icons:i3 , name:'Email'},
+    {icons:i4 , name:'Phone'},
+    {icons:i5 , name:'Date'},
+    {icons:i6 , name:'Rating'},
+    {icons:i7 , name:'Button' }
 ]

@@ -3,6 +3,9 @@
     display: flex;
     height: 92vh;
 }
+.page h4 , .page h3 , .page p{
+    cursor: pointer;
+}
 
 .inputIconContainer{
     width: 25%;
@@ -50,6 +53,11 @@
     align-items: center;
     gap: 30px;
     overflow-y: scroll;
+}
+
+::-webkit-scrollbar{
+    /* width: 4px; */
+    display: none;
 }
 
 .templateHeading{
