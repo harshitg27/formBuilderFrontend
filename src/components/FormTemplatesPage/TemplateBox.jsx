@@ -40,7 +40,7 @@ function TemplateBox({ template, index, setValue, deleteTemplate }) {
             <span style={deleteIconStyles} onClick={()=> deleteTemplate(index)}>
                 <img src={deleteIcon} alt="X" width='24px' height='24px' />
             </span>
-            <h3>{template.iName}</h3>
+            <h3>{template.type == 'Bubble' ? template.iName : `Input ${template.iName}`}</h3>
             {template.required && 
             <input type="text" 
             style={template.value.trim().length ===0 ? errorStyles.input : {}} 

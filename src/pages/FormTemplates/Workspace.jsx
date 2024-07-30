@@ -36,7 +36,7 @@ function Workspace({templates, setTemplates , inputNumbers , setInputNumbers}) {
             type:'Input',
             required : name == 'Button',
             inputType : name ,
-            iName : `Input ${name} ${inputNumbers[index + 4]}`,
+            iName : `${name} ${inputNumbers[index + 4]}`,
         }
         name == 'Button' ? obj.value = '' : obj.hint = hint
         setTemplates([...templates , obj])

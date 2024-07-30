@@ -107,7 +107,7 @@ function Dashboard() {
     // },[forms])
     useEffect(()=>{
         if(action == "Logout"){
-            localStorage.removeItem('userToken')
+            localStorage.clear()
             navigate('/')
         }else if(action == "setting"){
             navigate('/setting')

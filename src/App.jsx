@@ -5,7 +5,9 @@ import SignUpPage from './pages/LoginandSignUp/SignUpPage'
 import Dashboard from './pages/DashboardPage/Dashboard'
 import NotFound from './pages/NotFound'
 import SettingPage from './pages/SettingPage/SettingPage'
+import SettPage from './pages/SettingPage/sett'
 import FormTemplatesPage from './pages/FormTemplates/FormTemplatesPage'
+import FormResponsePage from './pages/FormResponsePage/FormResponsePage'
 function App() {
 
   return (
@@ -16,8 +18,10 @@ function App() {
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/setting' element={<SettingPage />} />
+        {/* <Route path='/setting' element={<SettPage />} /> */}
         <Route path='/formtemplates/create' element={<FormTemplatesPage />} />
         <Route path='/formtemplates/update/:id' element={<FormTemplatesPage />} />
+        <Route path='/form/:id' element={<FormResponsePage />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
       

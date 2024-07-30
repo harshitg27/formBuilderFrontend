@@ -58,11 +58,15 @@
 .applyTheme{
     /* width: 75%; */
     flex: 3;
-    position: relative;
+    /* position: relative; */
     padding: 5rem ;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .bubble{
-    position: absolute;
+    /* position: absolute; */
+    align-self: flex-start;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -88,9 +92,10 @@
 }
 
 .input{
-    position: absolute;
-    right: 5rem;
-    top: 9rem;
+    align-self: flex-end;
+    position: relative;
+    /* right: 5rem;
+    top: 9rem; */
     width: 4rem;
     background-color: #0042DA;
 }
@@ -98,8 +103,9 @@
 .input div {
     position: absolute;
     width: 12px;
-    width: 12px;
+    height: 12px;
     background-color: #0063FF;
     border-radius: 6px;
-    right: -6px;
+    right: -5px;
+    top: -5px;
 }

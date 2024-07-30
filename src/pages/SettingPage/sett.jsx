@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 function SettingPage() {
     const navigate = useNavigate()
     const [error, setError] = useState({ username: '', oldPassword: '', newPassword: '' })
-    const [userId, setUserId] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [oldPassword, setOldPassword] = useState('');
@@ -15,93 +14,9 @@ function SettingPage() {
     const [oldPasswordType, setOldPasswordType] = useState('password');
     const [newPasswordType, setNewPasswordType] = useState('password');
 
-
-    function validate() {
-        let err = false;
-        setError({ username: '', oldPassword: '', newPassword: '' })
-        if (username.trim().length === 0) {
-            err = true
-            setError((error) => {
-                return {
-                    ...error,
-                    username: 'Username is required'
-                }
-            })
-        }
-        if (oldPassword.trim().length === 0) {
-            err = true
-            setError((error) => {
-                return {
-                    ...error,
-                    oldPassword: 'Old Password is required'
-                }
-            })
-        }
-        if (newPassword.trim().length === 0) {
-            err = true
-            setError((error) => {
-                return {
-                    ...error,
-                    newPassword: ' Enter New Password'
-                }
-            })
-        }
-        if (err) {
-            return
-        }
-        handleUpdate()
-    }
-
-    const handleUpdate = async() =>{
-        const response = await updateUser(username , email , oldPassword , newPassword)
-        if(response.status == 201){
-            alert(response.data.message)
-            navigate('/dashboard')
-        }else if(response.status == 400){
-            setError((error) => {
-                return {
-                    ...error,
-                    oldPassword: response.data.message,
-                }
-            })
-        }else if(response.status == 401 || response.status == 404){
-            Logout()
-        }
-    }
-
-    const Logout = () => {
-        localStorage.clear()
-        navigate('/')
-    }
-    const fetchUser = async () => {
-        const response = await UserData()
-        if (response.status == 200) {
-            setUserId(response.data.user._id)
-            setUsername(response.data.user.userName)
-            setEmail(response.data.user.email)
-        } else if (response.status == 400 || response.status == 401) {
-            Logout()
-        }
-    }
-
-    // const handleUpdate = () => {
-    //     validate()
-    // }
-
-    useEffect(() => {
-        fetchUser()
-    }, [])
-
-    return (
-        <div className={styles.page} >
-            <h4 style={{ fontWeight: '600', fontSize: '1.37rem' }}>Settings</h4>
-
-            <div className={styles.Logout} onClick={Logout} >
-                <GrLogout style={{ height: '1.5rem', width: '1.5rem' }} />
-                <p>Log out</p>
-            </div>
-
-            <div className={styles.updateForm}>
+  return (
+    <div>
+        <div className={styles.updateForm}>
                 <form >
                     <div className={styles.inputBox}>
                         <GrUser className={styles.leftIcon} />
@@ -149,13 +64,15 @@ function SettingPage() {
                             <GrHide className={styles.rightIcon} onClick={() => setNewPasswordType('password')} /> :
                             <GrView className={styles.rightIcon} onClick={() => setNewPasswordType('text')} />}
                     </div>
+
                 </form>
                 
-                <button onClick={()=>validate()}>Sign Up</button>
-
+                <button onClick={()=>console.log('btn Click')}>Sign Up</button>
             </div>
-        </div>
-    )
+      
+      <button onClick={()=>console.log('btn Click')}>Sign Up</button>
+    </div>
+  )
 }
 
 export default SettingPage

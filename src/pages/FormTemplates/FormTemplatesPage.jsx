@@ -17,7 +17,7 @@ function FormTemplatesPage() {
   const [formId, setFormId] = useState('')
   const [inputNumbers, setInputNumbers] = useState([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
   const [formLink, setFormLink] = useState('')
-  const [copyLink , setCopyLink] = useState(false)
+  const [copyLink, setCopyLink] = useState(false)
   const path = window.location.pathname.split('/')
 
   const fetchForm = async (id) => {
@@ -44,13 +44,18 @@ function FormTemplatesPage() {
       fetchForm(path[path.length - 1])
     }
   }, [])
-  useEffect(()=>{
-    if(copyLink){
-      setTimeout(()=>{
+  useEffect(() => {
+    if (copyLink) {
+      setTimeout(() => {
         setCopyLink(false)
-      } , 5000)
+      }, 5000)
     }
-  },[copyLink])
+  }, [copyLink])
+  
+  const copyToClipboard = async (link) => {
+    await window.navigator.clipboard.writeText(link)
+    setCopyLink(true)
+  }
 
   const createF = async () => {
     const folderId = localStorage.getItem('selectedFolderId')
@@ -58,9 +63,10 @@ function FormTemplatesPage() {
     // console.log(response.data)
     if (response.status == 201) {
       setFormId(response.data.form._id)
-      setFormLink(`/form/${response.data.form._id}`)
-      await window.navigator.clipboard.writeText(`/form/${response.data.form._id}`)
-      setCopyLink(true)
+      setFormLink(`${window.location.host}/form/${response.data.form._id}`)
+      copyToClipboard(`${window.location.host}/form/${response.data.form._id}`)
+      // await window.navigator.clipboard.writeText(`${window.location.host}/form/${response.data.form._id}`)
+      // setCopyLink(true)
       navigate(`/formtemplates/update/${response.data.form._id}`)
       fetchForm(response.data.form._id)
     }
@@ -68,14 +74,17 @@ function FormTemplatesPage() {
 
   const updateF = async () => {
     const folderId = localStorage.getItem('selectedFolderId')
-    const response = await updateForm(formId , formName, formTheme, folderId, formTemplates, inputNumbers)
-    if(response.status == 201){
+    const response = await updateForm(formId, formName, formTheme, folderId, formTemplates, inputNumbers)
+    if (response.status == 201) {
       console.log(response.data.updatedForm)
-      setFormLink(`/form/${response.data.updatedForm._id}`)
-      await window.navigator.clipboard.writeText(`/form/${response.data.updatedForm._id}`)
-      setCopyLink(true)
+      setFormLink(`${window.location.host}/form/${response.data.updatedForm._id}`)
+      copyToClipboard(`${window.location.host}/form/${response.data.updatedForm._id}`)
+      // await window.navigator.clipboard.writeText(`${window.location.host}/form/${response.data.updatedForm._id}`)
+      // setCopyLink(true)
     }
   }
+  const clickboard = () =>  copyToClipboard(formLink) 
+
 
   const selectedStyles = {
     color: '#7EA6FF',
@@ -93,7 +102,7 @@ function FormTemplatesPage() {
           <h5 style={selectedNav === 'Response' ? selectedStyles : {}} onClick={() => setSelectedNav('Response')}>Response</h5>
         </div>
         <div className={styles.actions}>
-          <button style={formId ? { background: '#1A5FFF' } : {}} > Share</button>
+          <button style={formId ? { background: '#1A5FFF' } : {}} onClick={()=>{{formId ? clickboard() : ''}}} > Share</button>
           <button style={{ background: 'rgba(74 , 222 , 128 , .8)' }} onClick={() => { formId ? updateF() : createF() }}> Save</button>
           <p onClick={() => { navigate('/dashboard') }}>X</p>
         </div>
