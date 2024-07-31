@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 function FormCard({ formData, index, action, styles }) {
   const navigate = useNavigate()
   const updateForm = () => {
+    localStorage.setItem('selectedFolderId' , formData.folderId)
     navigate(`/formtemplates/update/${formData._id}`)
   }
   const deleteForm = async () => {

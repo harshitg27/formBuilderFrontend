@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BACKEND_ORIGIN_URL = 'http://localhost:4005'
+const BACKEND_ORIGIN_URL = 'https://formbuilderbackend-zay6.onrender.com/folder'
 
 const CreateFolder = async (folderName ) =>{
     try {
@@ -10,7 +10,7 @@ const CreateFolder = async (folderName ) =>{
                 Authorization: `Bearer ${token}`
             }
         }
-        const response = await axios.post(`${BACKEND_ORIGIN_URL}/folder/create` , {folderName } , config)
+        const response = await axios.post(`${BACKEND_ORIGIN_URL}/create` , {folderName } , config)
         return response
     } catch (error) {
         return error.response ;
@@ -25,7 +25,7 @@ const foldersData = async () =>{
                 Authorization: `Bearer ${token}`
             }
         }
-        const response = await axios.get(`${BACKEND_ORIGIN_URL}/folder/find` , config)
+        const response = await axios.get(`${BACKEND_ORIGIN_URL}/find` , config)
         return response
     } catch (error) {
         return error.response
@@ -33,7 +33,7 @@ const foldersData = async () =>{
 }
 const foldersDataById = async (id) =>{
     try {
-        const response = await axios.get(`${BACKEND_ORIGIN_URL}/folder/get/${id}`)
+        const response = await axios.get(`${BACKEND_ORIGIN_URL}/get/${id}`)
         return response
     } catch (error) {
         return error.response
@@ -48,7 +48,7 @@ const deleteFolderById = async (id) =>{
                 Authorization: `Bearer ${token}`
             }
         }
-        const response = await axios.delete(`${BACKEND_ORIGIN_URL}/folder/delete/${id}` , config)
+        const response = await axios.delete(`${BACKEND_ORIGIN_URL}/delete/${id}` , config)
         return response
     } catch (error) {
         return error.response

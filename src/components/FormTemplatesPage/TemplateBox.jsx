@@ -43,7 +43,7 @@ function TemplateBox({ template, index, setValue, deleteTemplate }) {
             <h3>{template.type == 'Bubble' ? template.iName : `Input ${template.iName}`}</h3>
             {template.required && 
             <input type="text" 
-            style={template.value.trim().length ===0 ? errorStyles.input : {}} 
+            style={template.value.trim().length === 0 ? errorStyles.input : {}} 
             placeholder={placeholder} value={template.value} onChange={(e) => setValue(e.target.value, index)} />}
             {template.required && template.value.trim().length === 0 && <span style={errorStyles.error}>Required True</span>}
             {!template.required && <p>{`Hint : ${template.hint}`}</p>}

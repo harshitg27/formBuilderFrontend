@@ -13,8 +13,8 @@ function FormTemplatesPage() {
   const [formName, setFormName] = useState('')
   const [formTheme, setFormTheme] = useState('Dark')
   const [formTemplates, setFormTemplates] = useState([])
-  // const [isUpdate, setIsUpdate] = useState(false)
   const [formId, setFormId] = useState('')
+  const [formViews, setFormViews] = useState(null)
   const [inputNumbers, setInputNumbers] = useState([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
   const [formLink, setFormLink] = useState('')
   const [copyLink, setCopyLink] = useState(false)
@@ -22,17 +22,16 @@ function FormTemplatesPage() {
 
   const fetchForm = async (id) => {
     const response = await getFormById(id)
-    // console.log(response)
+    console.log(response)
     if (response.status == 200) {
-      console.log(response.data.form)
       setFormName(response.data.form.formName)
       setFormTheme(response.data.form.formTheme)
+      setFormViews(response.data.form.views)
       setFormTemplates(response.data.form.formTemplate)
       setInputNumbers(response.data.form.inputNumbers)
     } else {
-      // console.log('LogOut')
-      localStorage.clear
-      navigate('/')
+      alert(response.data.message)
+      navigate('/dashboard')
     }
   }
   useEffect(() => {
@@ -40,7 +39,7 @@ function FormTemplatesPage() {
     if (path[path.length - 2] == 'update') {
       // console.log(path[path.length - 2])
       setFormId(path[path.length - 1])
-      setFormLink('/form/' + path[path.length - 1])
+      setFormLink(window.location.host + '/form/' + path[path.length - 1])
       fetchForm(path[path.length - 1])
     }
   }, [])
@@ -51,6 +50,9 @@ function FormTemplatesPage() {
       }, 5000)
     }
   }, [copyLink])
+  // useEffect(()=>{
+  //   console.log(formTemplates)
+  // },[formTemplates])
   
   const copyToClipboard = async (link) => {
     await window.navigator.clipboard.writeText(link)
@@ -60,15 +62,15 @@ function FormTemplatesPage() {
   const createF = async () => {
     const folderId = localStorage.getItem('selectedFolderId')
     const response = await createForm(formName, formTheme, folderId, formTemplates, inputNumbers);
-    // console.log(response.data)
     if (response.status == 201) {
       setFormId(response.data.form._id)
       setFormLink(`${window.location.host}/form/${response.data.form._id}`)
       copyToClipboard(`${window.location.host}/form/${response.data.form._id}`)
-      // await window.navigator.clipboard.writeText(`${window.location.host}/form/${response.data.form._id}`)
-      // setCopyLink(true)
       navigate(`/formtemplates/update/${response.data.form._id}`)
       fetchForm(response.data.form._id)
+    }else if(response.status == 401){
+      localStorage.clear()
+      navigate('/')
     }
   }
 
@@ -76,16 +78,28 @@ function FormTemplatesPage() {
     const folderId = localStorage.getItem('selectedFolderId')
     const response = await updateForm(formId, formName, formTheme, folderId, formTemplates, inputNumbers)
     if (response.status == 201) {
-      console.log(response.data.updatedForm)
       setFormLink(`${window.location.host}/form/${response.data.updatedForm._id}`)
       copyToClipboard(`${window.location.host}/form/${response.data.updatedForm._id}`)
-      // await window.navigator.clipboard.writeText(`${window.location.host}/form/${response.data.updatedForm._id}`)
-      // setCopyLink(true)
+    }else if(response.status == 401){
+      localStorage.clear()
+      navigate('/')
     }
   }
   const clickboard = () =>  copyToClipboard(formLink) 
 
-
+  const handleSave = () =>{
+    let errArr = formTemplates.filter((templates , index )=> {
+      return templates.required && !templates.value.trim()
+      // if(templates.required ){
+      //   return index ;
+      // }
+    })
+    if(errArr.length != 0){
+      alert('Fill All Required Field')
+      return
+    }
+    formId ? updateF() : createF()
+  }
   const selectedStyles = {
     color: '#7EA6FF',
     border: 'solid #7EA6FF 1px'
@@ -103,7 +117,7 @@ function FormTemplatesPage() {
         </div>
         <div className={styles.actions}>
           <button style={formId ? { background: '#1A5FFF' } : {}} onClick={()=>{{formId ? clickboard() : ''}}} > Share</button>
-          <button style={{ background: 'rgba(74 , 222 , 128 , .8)' }} onClick={() => { formId ? updateF() : createF() }}> Save</button>
+          <button style={{ background: 'rgba(74 , 222 , 128 , .8)' }} onClick={() => { handleSave()}}> Save</button>
           <p onClick={() => { navigate('/dashboard') }}>X</p>
         </div>
       </header>
@@ -116,7 +130,7 @@ function FormTemplatesPage() {
 
       {selectedNav === 'Flow' && <Workspace templates={formTemplates} setTemplates={setFormTemplates} inputNumbers={inputNumbers} setInputNumbers={setInputNumbers} />}
       {selectedNav === 'Theme' && <ThemesPage formTheme={formTheme} setFormTheme={setFormTheme} />}
-      {selectedNav === 'Response' && <Analytics />}
+      {selectedNav === 'Response' && <Analytics formId={formId} />}
     </div>
   )
 }

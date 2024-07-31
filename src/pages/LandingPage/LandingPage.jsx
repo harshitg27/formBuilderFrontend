@@ -4,10 +4,13 @@ import styles from './LandingPage.module.css'
 import { BsBoxArrowUpRight } from 'react-icons/bs'
 import logo from '../../assets/logo.png'
 import chatbotimg from '../../assets/images/chatBotIntro.png'
+import chatbotCompare from '../../assets/images/chatbotCompare.png'
+import typebot from '../../assets/images/typebotStandard.png'
 import desc1 from '../../assets/images/desc1.png'
 import desc2 from '../../assets/images/desc2.png'
 import { teamlogos } from '../../assets/data/teamsLogo'
 import { companyLogos1, companyLogos2 } from '../../assets/data/companyslogo'
+import { features } from '../../assets/data/featuresData'
 
 function LandingPage() {
   const navigate = useNavigate() ;
@@ -51,8 +54,9 @@ function LandingPage() {
               your conversion rate compared to classical forms.</p>
           </div>
           <div className={styles.comparison} >
-            <div></div>
-            <div></div>
+            <div>
+              <img src={chatbotCompare} alt="Comparing Chat Bot" />
+            </div>
           </div>
         </section>
 
@@ -90,12 +94,14 @@ function LandingPage() {
         <section className={styles.layout4}>
           <div className={styles.rowIcons}>
             <div className={styles.rowIcon1} >
-              {companyLogos1?.map((logo, index) =>
-                (<img key={index} src={logo} />))}
+              {companyLogos1?.map((logo, index) =>{
+                return <div><img key={index} src={logo} /></div>
+              })}
             </div>
             <div className={styles.rowIcon2} >
-              {companyLogos2?.map((logo, index) =>
-                (<img key={index} src={logo} />))}
+              {companyLogos2?.map((logo, index) =>{
+                return <div><img key={index} src={logo} /></div>
+              })}
             </div>
           </div>
           <div className={styles.layout4Text} >
@@ -113,7 +119,9 @@ function LandingPage() {
               <span>You won't lose any valuable data.</span>
             </p>
           </div>
-          <div></div>
+          <div style={{width:'50%'}}>
+            <img src={typebot} alt="Typebot" />
+          </div>
         </section>
 
         <section className={styles.layout6} >
@@ -121,7 +129,15 @@ function LandingPage() {
             <h3>And many more features</h3>
             <p>Typebot makes form building easy and comes with powerful features</p>
           </div>
-          <div></div>
+          <div className={styles.features}>
+            {features.map((feature , index) =>{
+              return <div className={styles.featureDiv} key={index}>
+                <div><img src={feature.icon} alt="fe" /></div>
+                <h4>{feature.heading} </h4>
+                <p>{feature.desc}</p>
+              </div>
+            })}
+          </div>
         </section>
 
         <section className={styles.layout7} >

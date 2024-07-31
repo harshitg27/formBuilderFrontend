@@ -55,7 +55,7 @@ function Dashboard() {
             setSelectedFolder(response.data.user.folders[0])
             fetchForm(response.data.user.folders[0])
         }else if( response.status == 400 || response.status == 401){
-            localStorage.removeItem('userToken')
+            localStorage.clear()
             navigate('/')
         }
     }

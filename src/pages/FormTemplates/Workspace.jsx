@@ -10,13 +10,16 @@ function Workspace({templates, setTemplates , inputNumbers , setInputNumbers}) {
         setTemplates([...templates.slice(0 , idx) , {...templates[idx] , value} ,  ...templates.slice(idx+1)])
     }
     const deleteTemplate = ( idx) =>{
+        const index = templates[idx].numIndex
         setTemplates([...templates.slice(0 , idx) ,  ...templates.slice(idx+1)])
+        setInputNumbers([...inputNumbers.slice(0 , index) , inputNumbers[index] - 1 , ...inputNumbers.slice(index+1)])
     }
     const addBubbles = (name , index) =>{
         const obj = {
             type:'Bubble',
             required : true,
             inputType : name ,
+            numIndex : index ,
             iName : `${name} ${inputNumbers[index]}`,
             value : ''
         }
@@ -36,6 +39,7 @@ function Workspace({templates, setTemplates , inputNumbers , setInputNumbers}) {
             type:'Input',
             required : name == 'Button',
             inputType : name ,
+            numIndex : index + 4 ,
             iName : `${name} ${inputNumbers[index + 4]}`,
         }
         name == 'Button' ? obj.value = '' : obj.hint = hint

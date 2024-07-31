@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BACKEND_ORIGIN_URL = 'http://localhost:4005/form'
+const BACKEND_ORIGIN_URL = 'https://formbuilderbackend-zay6.onrender.com/form'
 
 const createForm = async (formName , formTheme , folderId , formTemplate , inputNumbers) =>{
     try {
@@ -26,6 +26,14 @@ const updateForm = async (formId , formName , formTheme , folderId , formTemplat
             }
         }
         const response = await axios.put(`${BACKEND_ORIGIN_URL}/update/${formId}` , {formName , formTheme , folderId , formTemplate , inputNumbers } , config)
+        return response
+    } catch (error) {
+        return error.response ;
+    }
+}
+const updateView = async (formId , view) =>{
+    try {
+        const response = await axios.put(`${BACKEND_ORIGIN_URL}/updateview/${formId}`, {view} )
         return response
     } catch (error) {
         return error.response ;
@@ -70,4 +78,4 @@ const deleteForm = async (id) =>{
     }
 }
 
-export{createForm , updateForm , getForm , getFormById , deleteForm}
+export{createForm , updateForm , getForm , getFormById , deleteForm , updateView}
